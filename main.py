@@ -13,6 +13,7 @@ while True:
     img = detector.findHands(img)
 
     print(detector.openFingers(img))
+    print(detector.countFingers(img))
 
 
 

@@ -68,3 +68,6 @@ class Hand():
                     openList.append(0)
 
         return openList
+
+    def countFingers(self, img, handNumber=0):
+        return self.openFingers(img, handNumber).count(1)
