@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from google.protobuf.json_format import MessageToDict
 
 
 class Hand():
@@ -46,11 +47,19 @@ class Hand():
         lmlist = self.findPos(img)
         tipFingers = [4, 8, 12, 16, 20]
         openList = []
+        if self.results.multi_handedness:
+            lrHand = self.results.multi_handedness[handNumber].classification[0].label
         if len(lmlist) != 0:
-            if lmlist[tipFingers[0]][1] > lmlist[tipFingers[0] - 2][1]:
-                openList.append(1)
+            if lrHand == 'Right':
+                if lmlist[tipFingers[0]][1] < lmlist[tipFingers[0] - 2][1]:
+                    openList.append(1)
+                else:
+                    openList.append(0)
             else:
-                openList.append(0)
+                if lmlist[tipFingers[0]][1] > lmlist[tipFingers[0] - 2][1]:
+                    openList.append(1)
+                else:
+                    openList.append(0)
 
             for i in range(1, 5):
                 if lmlist[tipFingers[i]][2] < lmlist[tipFingers[i] - 2][2]:

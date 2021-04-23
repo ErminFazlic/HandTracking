@@ -12,7 +12,7 @@ while True:
     success, img = capture.read()
     img = detector.findHands(img)
 
-    print(detector.countFingers(img))
+    print(detector.openFingers(img))
 
 
 
