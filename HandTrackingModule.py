@@ -35,3 +35,27 @@ class Hand():
                 lmY = int(landmarks.y * height)
                 posList.append([i, lmX, lmY])
         return posList
+
+        #Works for right hand right now, 1 for open finger, 0 for closed
+        #Index 0 = thumb
+        #Index 1 = index finger
+        #Index 2 = middle finger
+        #Index 3 = ring finger
+        #Index 4 = pinky finger
+    def openFingers(self, img, handNumber=0):
+        lmlist = self.findPos(img)
+        tipFingers = [4, 8, 12, 16, 20]
+        openList = []
+        if len(lmlist) != 0:
+            if lmlist[tipFingers[0]][1] > lmlist[tipFingers[0] - 2][1]:
+                openList.append(1)
+            else:
+                openList.append(0)
+
+            for i in range(1, 5):
+                if lmlist[tipFingers[i]][2] < lmlist[tipFingers[i] - 2][2]:
+                    openList.append(1)
+                else:
+                    openList.append(0)
+
+        return openList
