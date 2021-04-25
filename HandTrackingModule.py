@@ -37,14 +37,14 @@ class Hand():
                 posList.append([i, lmX, lmY])
         return posList
 
-        #Works for right hand right now, 1 for open finger, 0 for closed
+        #Works for either hand right now, 1 for open finger, 0 for closed
         #Index 0 = thumb
         #Index 1 = index finger
         #Index 2 = middle finger
         #Index 3 = ring finger
         #Index 4 = pinky finger
     def openFingers(self, img, handNumber=0):
-        lmlist = self.findPos(img)
+        lmlist = self.findPos(img, handNumber)
         tipFingers = [4, 8, 12, 16, 20]
         openList = []
         if self.results.multi_handedness:
@@ -70,4 +70,8 @@ class Hand():
         return openList
 
     def countFingers(self, img, handNumber=0):
-        return self.openFingers(img, handNumber).count(1)
+        count = 0
+        if self.results.multi_handedness:
+            if len(self.results.multi_handedness) == 2:
+                count = self.openFingers(img, handNumber=1).count(1)
+        return self.openFingers(img, handNumber=0).count(1) + count
