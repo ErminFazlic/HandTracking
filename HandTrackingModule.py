@@ -81,3 +81,19 @@ class Hand():
                 return True
             else:
              return False
+
+    def isThumbsDown(self, img, handNumber=0):
+        lmlist = self.findPos(img, handNumber)
+        if len(lmlist) != 0:
+            for i in range(0, len(lmlist)):
+                if lmlist[4][2] < lmlist[i][2]:
+                    return False
+            return True
+
+    def isThumbsUp(self, img, handNumber=0):
+        lmlist = self.findPos(img, handNumber)
+        if len(lmlist) != 0:
+            for i in range(0, len(lmlist)):
+                if lmlist[4][2] > lmlist[i][2]:
+                    return False
+            return True

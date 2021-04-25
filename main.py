@@ -24,12 +24,9 @@ while True:
     img = detector.findHands(img)
 
     #openFingersTest(img, detector)
-    print(detector.isFist(img))
-
-
-
-
-
+    #print(detector.isFist(img))
+    #print(detector.isThumbsUp(img))
+    print(detector.isThumbsDown(img))
 
     img = cv2.flip(img, 1)
     cv2.imshow("Capture", img)
