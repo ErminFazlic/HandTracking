@@ -43,11 +43,14 @@ class Hand():
         #Index 2 = middle finger
         #Index 3 = ring finger
         #Index 4 = pinky finger
-    def openFingers(self, img, handNumber=0):
+        #If both hands are open then the list will be double length and the first 5 are for the right hand, the last 5 for the left hand.
+    def openFingers(self, img, handNumber=0, recurse = True):
         lmlist = self.findPos(img, handNumber)
         tipFingers = [4, 8, 12, 16, 20]
         openList = []
         if self.results.multi_handedness:
+            if len(self.results.multi_handedness) == 2 and recurse:
+                openList = self.openFingers(img, handNumber=1, recurse=False)
             lrHand = self.results.multi_handedness[handNumber].classification[0].label
         if len(lmlist) != 0:
             if lrHand == 'Right':
@@ -70,8 +73,11 @@ class Hand():
         return openList
 
     def countFingers(self, img, handNumber=0):
-        count = 0
+        return self.openFingers(img, handNumber=0).count(1)
+
+    def isFist(self, img, handNumber=0):
         if self.results.multi_handedness:
-            if len(self.results.multi_handedness) == 2:
-                count = self.openFingers(img, handNumber=1).count(1)
-        return self.openFingers(img, handNumber=0).count(1) + count
+            if self.countFingers(img, handNumber) == 0:
+                return True
+            else:
+             return False

@@ -2,6 +2,17 @@ import cv2
 import mediapipe as mp
 import HandTrackingModule as htm
 
+def openFingersTest(img, detector):
+    openlist = detector.openFingers(img)
+    if (len(openlist) > 5):
+        print('Right: ')
+        print(openlist[:5])
+        print('Left: ')
+        print(openlist[5:])
+    else:
+        print(openlist)
+
+
 capture = cv2.VideoCapture(0)
 
 
@@ -12,8 +23,11 @@ while True:
     success, img = capture.read()
     img = detector.findHands(img)
 
-    print(detector.openFingers(img))
-    print(detector.countFingers(img))
+    #openFingersTest(img, detector)
+    print(detector.isFist(img))
+
+
+
 
 
 
