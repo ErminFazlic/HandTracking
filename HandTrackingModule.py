@@ -101,13 +101,10 @@ class Hand():
     def isOkSign(self, img, handNumber=0):
         lmlist = self.findPos(img, handNumber)
         if len(lmlist) != 0:
-            if self.countFingers(img, handNumber) == 4:
-                x1, y1 = lmlist[4][1], lmlist[4][2]
-                x2, y2 = lmlist[8][1], lmlist[8][2]
-                length = math.hypot(x2-x1, y2-y1)
-                if length < 30:
-                    return True
-                else:
-                    return False
+            x1, y1 = lmlist[4][1], lmlist[4][2]
+            x2, y2 = lmlist[8][1], lmlist[8][2]
+            length = math.hypot(x2 - x1, y2 - y1)
+            if self.countFingers(img, handNumber) == 4 and length < 30:
+                return True
             else:
                 return False
